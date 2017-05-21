@@ -118,26 +118,12 @@ tap "homebrew/services"
 brew "ctags"
 brew "git"
 brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
 brew "the_silver_searcher"
 brew "tmux"
 brew "vim"
-brew "watchman"
 brew "zsh"
 
-# Heroku
-brew "heroku-toolbelt"
-brew "parity"
-
-# GitHub
 brew "hub"
-
-# Image manipulation
-brew "imagemagick"
-
-# Testing
-brew "qt@5.5"
 
 # Programming languages and package managers
 brew "libyaml" # should come after openssl
@@ -150,10 +136,6 @@ brew "yarn"
 brew "postgres", restart_service: true
 brew "redis", restart_service: true
 EOF
-
-fancy_echo "Symlink qmake binary to /usr/local/bin for Capybara Webkit..."
-brew unlink qt@5.5
-brew link --force qt@5.5
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {

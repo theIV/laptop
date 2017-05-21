@@ -1,0 +1,30 @@
+brew bundle --file=- <<EOF
+cask 'virtualbox'
+
+brew 'mas'
+
+cask 'sonos'
+cask 'spotify'
+
+cask 'docker-toolbox'
+cask 'ngrok'
+cask 'tunnelblick'
+
+brew 'aws-elasticbeanstalk'
+brew 'awscli'
+
+brew 'httpie'
+
+cask 'slack'
+cask '1password'
+cask 'dropbox'
+cask 'google-chrome'
+
+tap 'homebrew/science'
+brew 'homebrew/science/r'
+cask 'rstudio'
+EOF
+
+fancy_echo "Cleaning up old Homebrew formulae..."
+brew cleanup
+brew cask cleanup
