@@ -3,6 +3,7 @@ cask 'virtualbox'
 
 brew 'mas'
 
+tap 'caskroom/drivers'
 cask 'sonos'
 cask 'spotify'
 
@@ -23,6 +24,9 @@ cask 'google-chrome'
 tap 'homebrew/science'
 brew 'homebrew/science/r'
 cask 'rstudio'
+
+cask 'sequel-pro'
+cask 'sublime-text'
 EOF
 
 fancy_echo "Cleaning up old Homebrew formulae..."
