@@ -119,7 +119,6 @@ brew "ctags"
 brew "git"
 brew "openssl"
 brew "the_silver_searcher"
-brew "tmux"
 brew "vim"
 brew "zsh"
 
