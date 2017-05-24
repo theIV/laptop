@@ -25,7 +25,7 @@ tap 'homebrew/science'
 brew 'homebrew/science/r'
 cask 'rstudio'
 
-cask 'sequel-pro'
+cask 'sqlworkbenchj'
 cask 'sublime-text'
 EOF
 
