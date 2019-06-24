@@ -112,9 +112,9 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
+tap "homebrew/cask-versions"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
-tap "heroku/brew"
 
 # Unix
 brew "universal-ctags", args: ["HEAD"]
@@ -122,36 +122,35 @@ brew "git"
 brew "openssl"
 brew "rcm"
 brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
+brew "ripgrep"
 brew "tmux"
 brew "vim"
-brew "watchman"
+brew "entr"
 brew "zsh"
-
-# Heroku
-brew "heroku/brew/heroku"
-brew "parity"
 
 # GitHub
 brew "hub"
 
-# Image manipulation
-brew "imagemagick"
-
 # Programming language prerequisites and package managers
 brew "libyaml" # should come after openssl
 brew "coreutils"
-brew "yarn"
 cask "gpg-suite"
 
-# Databases
-brew "postgres", restart_service: :changed
-brew "redis", restart_service: :changed
-EOF
+# Software
+cask "alacritty"
+cask "firefox-developer-edition"
+cask "1password"
+cask "adobe-creative-cloud"
+cask "dropbox"
 
-fancy_echo "Update heroku binary ..."
-brew unlink heroku
-brew link --force heroku
+# Window manager
+tap "koekeishiya/formulae"
+brew "yabai"
+brew "koekeishiya/formulae/skhd"
+
+# Mac App Store
+brew "mas"
+EOF
 
 fancy_echo "Configuring asdf version manager ..."
 if [ ! -d "$HOME/.asdf" ]; then
@@ -175,6 +174,7 @@ add_or_update_asdf_plugin() {
 source "$HOME/.asdf/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+add_or_update_asdf_plugin "rust" "https://github.com/code-lever/asdf-rust"
 
 install_asdf_language() {
   local language="$1"
@@ -187,18 +187,23 @@ install_asdf_language() {
   fi
 }
 
-fancy_echo "Installing latest Ruby ..."
-install_asdf_language "ruby"
-gem update --system
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-
-fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
-
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$HOME/.laptop.local"
 fi
+
+fancy_echo "Preparing yabai..."
+prepare_yabai() {
+  sudo yabai --install-sa
+  brew services start yabai
+}
+
+fancy_echo "Preparing skhd..."
+prepare_skhd() {
+  brew services start skhd
+}
+prepare_skhd
+
+# TODO: prompt for hub config
+# TODO: configure git-crypt / 1pcli
